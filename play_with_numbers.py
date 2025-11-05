@@ -18,16 +18,12 @@ def find_n_digits_of_e(num):
     print(f'Value of e till {num}th decimal point is: {math.e:.{num}f}')
 
 def fibonacci_series(num):
-    a = 0
-    b = 1
-    next = b
-    count = 2
-    print(f'{a} {b}', end= ' ')
-    while count <= num:
-        print(next,end=' ')
-        count+=1
-        a,b = b, next
-        next = a+b
+    a, b = 0, 1
+    print(a, b, end=' ')
+    for _ in range(2, num):
+        a, b = b, a + b
+        print(b, end=' ')
+    print()  # for clean line break
 
 def prime_factors(num):
     factors = set()
@@ -40,8 +36,7 @@ def prime_factors(num):
             num //= i
     if num > 2:
         factors.add(num)
-    print(factors)
-
+    print(f'Prime factors: {sorted(factors)}')
 
 def is_prime(n):
     if n < 2: return False
@@ -60,54 +55,52 @@ def next_prime_number(num):
 
 def choiceLogic():
     seperator = "\n#########################################\n"
-    print(f"{seperator}Lets Play with numbers!{seperator}")
-    choiceflag = True
-    while choiceflag:
-        inp = input("We can do the following:\n1.find_n_digits_of_pi\n2.find_n_digits_of_e\n3.fibonacci_series\n4.prime_factors_of_a_number\n5.next_prime_number\nSelect what you'll like to do:")
-        if inp.isdigit():
+    print(f"{seperator}Let's Play with Numbers!{seperator}")
+    while True:
+        inp = input("Choose an option:\n1. find_n_digits_of_pi\n2. find_n_digits_of_e\n3. fibonacci_series\n4. prime_factors_of_a_number\n5. next_prime_number\nYour choice: ")
+        if inp.isdigit() and int(inp) in range(1, 6):
             inp = int(inp)
-            if inp in range(1,6):
-                choiceflag = False
-    numflag = True
-    while numflag:
-        number = input("Enter the number (If you have selected choice 1 or 2 then select number between 0 and 15): ")
+            break
+        print("Invalid choice. Please select a number between 1 and 5.")
+
+    while True:
+        number = input("Enter a number (For options 1 or 2, enter 0–15): ")
         if number.isdigit():
             number = int(number)
-            continuechoice = 'n'
-            if inp in [1,2]:
-                if number>=0 and number<=15:
-                    numflag = False
-                    if inp == 1:
-                        print(f'{seperator}Finding value of pi till {number}th decimal point!')
-                        find_n_digits_of_pi(number)
-                        print(seperator)
-
-                    else:
-                        print(f'{seperator}Finding value of e till {number}th decimal point!')
-                        find_n_digits_of_e(number)
-                        print(seperator)
-
+            if inp in [1, 2] and 0 <= number <= 15:
+                print(f'{seperator}')
+                if inp == 1:
+                    print(f'Finding value of pi till {number}th decimal point!')
+                    find_n_digits_of_pi(number)
+                else:
+                    print(f'Finding value of e till {number}th decimal point!')
+                    find_n_digits_of_e(number)
+                print(seperator)
+                break
             elif inp == 3:
-                numflag = False
-                print(f'{seperator}Finding Fibonacci Series of {number} numbers!')
+                print(f'{seperator}Fibonacci Series of {number} terms:')
                 fibonacci_series(number)
                 print(seperator)
-
+                break
             elif inp == 4:
-                numflag = False
-                print(f'{seperator}Finding prime factors of num = {number}!')
+                print(f'{seperator}Prime factors of {number}:')
                 prime_factors(number)
                 print(seperator)
-
+                break
             elif inp == 5:
-                print(f'{seperator}Finding next prime number after {number}!')
+                print(f'{seperator}')
                 next_prime_number(number)
                 print(seperator)
-                numflag = False
+                break
+            else:
+                print("For options 1 and 2, please choose a number between 0 and 15.")
+        else:
+            print("Please enter a valid number.")
 
-
+# Main loop
 while True:
     choiceLogic()
     cont = input('Do you want to continue? (y/n): ')
     if cont.lower() != 'y':
+        print("Goodbye!")
         break
