@@ -5,11 +5,11 @@ def get_positive_float(prompt):
         try:
             value = float(value)
             if value <= 0:
-                print("❌ Value must be greater than zero. Try again.")
+                print("Value must be greater than zero. Try again.")
             else:
                 return value
         except ValueError:
-            print("❌ Invalid input. Please enter a number.")
+            print("Invalid input. Please enter a number.")
 
 
 def calculate_area(w, h, shape_type):
